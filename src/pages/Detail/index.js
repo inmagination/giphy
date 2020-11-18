@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
-import GifsContext from '../../context/GifsContext'
+import React from 'react'
+import useGlobalGifs from '../../hooks/useGlobalGifs'
 
 export default function Detail({params}) {  
-  const {gifs} = useContext(GifsContext);
+  const gifs = useGlobalGifs();
   const detailGif = gifs.find(gif => gif.id === params.id )
 
   return (
