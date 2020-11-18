@@ -1,9 +1,12 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import getGifs from '../services/getGifs';
+import GifsContext from '../context/GifsContext' 
 
 export function useGifs ({ keyword } = { keyword: null } ) {
-  const [loading, setLoading] = useState(false);
-  const [gifs, setGifs] = useState([]);
+  const [loading, setLoading] = useState(false); 
+
+  // const [gifs, setGifs] = useState([]); // estado local
+  const {gifs, setGifs} = useContext(GifsContext); // estado contexto especifico    
 
   // se ejecuta cada vez que se renderiza un componente
   // tiene dos parametros: la funcion a ejecutar cuando se renderiza el componente y un array de dependencias
@@ -17,7 +20,7 @@ export function useGifs ({ keyword } = { keyword: null } ) {
         setLoading(false)
         localStorage.setItem('lastKeword', keyword)
       })
-  }, [keyword]) // pasamos dependencia para que cada vez que cambie se renderice la lista
+  }, [keyword, setGifs]) // pasamos dependencia para que cada vez que cambie se renderice la lista
 
   return {loading, gifs}
 }

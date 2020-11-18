@@ -1,10 +1,11 @@
+import { Link } from "wouter";
 import './Gif.css'
 
 export default function Gif ({title, id, url}) {
   return(
-    <a className='Gif' href={`#${id}`} >
+    <Link className='Gif' to={`/gif/${id}`}>
       <h6>{title}</h6>
       <img alt={title} src={url} />
-    </a> 
+    </Link> 
   )
 }
