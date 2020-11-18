@@ -1,22 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import ListOfGifs from '../../components/ListOfGifs';
-import getGifs from '../../services/getGifs';
+import {useGifs} from '../../hooks/useGifs'
 
 export default function SearchResults({ params }) { 
   const { keyword } = params  
-  const [loading, setLoading] = useState(false);
-  const [gifs, setGifs] = useState([]);
-
-  // se ejecuta cada vez que se renderiza un componente
-  // tiene dos parametros: la funcion a ejecutar cuando se renderiza el componente y un array de dependencias
-  useEffect(() => {
-    setLoading(true) 
-    getGifs({ keyword })
-      .then(gifs => {
-        setGifs(gifs)
-        setLoading(false)
-      })
-  }, [keyword]) // pasamos dependencia para que cada vez que ambie de renderice la lista
+  const { loading, gifs } = useGifs({ keyword }) // custom hook que devuelve loading y gifs   
   
   return (
     <React.Fragment>
