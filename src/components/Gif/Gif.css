@@ -1,0 +1,18 @@
+.Gif {
+  display: block;
+  border: 1px solid #eee;
+  margin: 20px auto;
+  width: 80%;
+  padding: 15px;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+}
+
+.Gif h4 {
+  margin: 0;
+}
+
+.Gif img {
+  width: 90%;
+}
