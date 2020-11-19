@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useLocation } from "wouter";
 
 import ListOfGifs from '../../components/ListOfGifs';
+import TrendingSearches from '../../components/TrendingSearches';
 import {useGifs} from '../../hooks/useGifs'
 
 const POPULAR_GIFS = ['husky', 'panda', 'tiger'];
@@ -38,6 +39,10 @@ export default function Home() {
           </li>
           ))}
       </ul>   
+
+
+      <h4>Tendencias</h4>
+      <TrendingSearches />
 
       <h4>Última búsqueda</h4>
         {loading

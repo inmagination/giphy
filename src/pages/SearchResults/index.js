@@ -10,7 +10,10 @@ export default function SearchResults({ params }) {
     <React.Fragment>
       {loading
         ? <h4>Cargando....</h4>
-        : <ListOfGifs gifs={gifs} />
+        : <React.Fragment>
+            <h3>Results for '{decodeURI(keyword)}'</h3>
+            <ListOfGifs gifs={gifs} />
+          </React.Fragment>
       }
     </React.Fragment>     
   );

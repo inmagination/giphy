@@ -1,0 +1,12 @@
+.trends {
+  margin: 0;
+  display: flex;
+  list-style: none;
+  flex-flow: row wrap;
+}
+
+.trends li:after {
+  content: '|';
+  margin-left: 15px;
+  margin-right: 15px;
+}
