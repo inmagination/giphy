@@ -1,14 +1,14 @@
 // estilos 
-import './App.css';
+import 'App.css';
 
 // Páginas
-import Home from './pages/Home'
-import SearchResults from './pages/SearchResults'
-import Detail from './pages/Detail'
+import Home from 'pages/Home'
+import SearchResults from 'pages/SearchResults'
+import Detail from 'pages/Detail'
 
 // Contextos
-import StaticContext from './context/StaticContext'
-import {GifsContextProvider} from './context/GifsContext'
+import StaticContext from 'context/StaticContext'
+import {GifsContextProvider} from 'context/GifsContext'
 
 // Librería para rutas
 import { Link, Route } from "wouter";

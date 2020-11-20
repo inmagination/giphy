@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Link, useLocation } from "wouter";
 
-import ListOfGifs from '../../components/ListOfGifs';
-import TrendingSearches from '../../components/TrendingSearches';
-import {useGifs} from '../../hooks/useGifs'
+import ListOfGifs from 'components/ListOfGifs';
+import TrendingSearches from 'components/TrendingSearches';
+import {useGifs} from 'hooks/useGifs'
 
 const POPULAR_GIFS = ['husky', 'panda', 'tiger'];
 

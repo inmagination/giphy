@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import './Gif.css'
+import 'components/Gif/Gif.css'
 
 export default function Gif ({title, id, url}) {
   return(

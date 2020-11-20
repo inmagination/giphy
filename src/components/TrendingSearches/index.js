@@ -1,7 +1,7 @@
-import './styles.css'
+import 'components/TrendingSearches/styles.css'
 
 import {useEffect, useState} from 'react';
-import getTrendingGifs from '../../services/getTrendingGifs'
+import getTrendingGifs from 'services/getTrendingGifs'
 import { Link } from "wouter";
 
 export default function TrendingSearches () {

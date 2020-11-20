@@ -1,4 +1,4 @@
-import { API_KEY, API_URL } from './settings'
+import { API_KEY, API_URL } from'services/settings'
 
 export default function getTrendingGifs() {
   const apiUrl = `${API_URL}/trending/searches?api_key=${API_KEY}`;
