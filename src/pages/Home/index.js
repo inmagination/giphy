@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, useLocation } from "wouter";
 
 import ListOfGifs from 'components/ListOfGifs';
-import TrendingSearches from 'components/TrendingSearches';
+import LazyTrending from 'components/TrendingSearches';
 import {useGifs} from 'hooks/useGifs'
 
 const POPULAR_GIFS = ['husky', 'panda', 'tiger'];
@@ -38,17 +38,15 @@ export default function Home() {
             <Link to={`/search/${popularGif}`}>Gif {popularGif}</Link>
           </li>
           ))}
-      </ul>   
-
-
-      <h4>Tendencias</h4>
-      <TrendingSearches />
+      </ul>        
 
       <h4>Última búsqueda</h4>
         {loading
           ? <h4>Cargando....</h4>
           : <ListOfGifs gifs={gifs} />
-        }   
+        } 
+
+        <LazyTrending />
     </React.Fragment>
   );
 }
