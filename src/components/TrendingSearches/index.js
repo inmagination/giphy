@@ -29,6 +29,7 @@ function TrendingSearches () {
 export default function LazyTrending () {
   const [show, setShow] = useState(false)
   const elementRef = useRef() // referencia a un elemento del DOM sin selectores
+  let observer = null
 
   useEffect(() => {
 
@@ -42,18 +43,26 @@ export default function LazyTrending () {
       }
     }
 
-    // nos permitira hacer un lazyloading del componente
-    const observer = new IntersectionObserver(onChange, {
-      rootMargin: '100px' // a la distancia de 100px detectará la inteseccion con viewport
-    })
+    // para dar soporte a los navegadores que no tienen IntersectionObserver (IE11)
+    // pedimos la libreria npm solo si la necesitamos (si lo ponemos arriba la pedirá siempre)
+    Promise.resolve(
+      typeof IntersectionObserver !== 'undefined'
+        ? IntersectionObserver
+        : import('intersection-observer')         
+    ).then(() => {
+      // nos permitira hacer un lazyloading del componente
+      observer = new IntersectionObserver(onChange, {
+        rootMargin: '100px' // a la distancia de 100px detectará la inteseccion con viewport
+      })
 
-    // observar el elemento que deseamos vigilar
-    // pasamos el elemento referenciado de userRef
-    observer.observe(elementRef.current)
+      // observar el elemento que deseamos vigilar
+      // pasamos el elemento referenciado de userRef
+      observer.observe(elementRef.current)
+    })    
 
     // devolvemos la desconexion para que cuando el componente se deje de usar se limpie el evento
     // se ecita por ejemplo que se ejecute el setShow cuando el componente
-    return () => observer.disconnect()
+    return () => observer && observer.disconnect()
   })
   
   return <div ref={elementRef}>
