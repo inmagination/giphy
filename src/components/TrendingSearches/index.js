@@ -1,7 +1,7 @@
 import React from 'react'
 import 'components/TrendingSearches/styles.css'
 
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import getTrendingGifs from 'services/getTrendingGifs'
 import { Link } from "wouter";
 
@@ -28,15 +28,17 @@ function TrendingSearches () {
 
 export default function LazyTrending () {
   const [show, setShow] = useState(false)
+  const elementRef = useRef() // referencia a un elemento del DOM sin selectores
 
   useEffect(() => {
 
     // callback que se ejecuta cuando el componente observado cambie
     // entries: todas las entras que se están observados (pueden ser varios)
-    const onChange = (entries) => {
+    const onChange = (entries, observer) => {
       const el = entries[0] // solo estamos usando un elemento
       if (el.isIntersecting) {
         setShow(true)
+        observer.disconnect() // deshabilitar el observer para que no siga saltando
       }
     }
 
@@ -46,10 +48,15 @@ export default function LazyTrending () {
     })
 
     // observar el elemento que deseamos vigilar
-    observer.observe(document.getElementById('LazyTrending'))
+    // pasamos el elemento referenciado de userRef
+    observer.observe(elementRef.current)
+
+    // devolvemos la desconexion para que cuando el componente se deje de usar se limpie el evento
+    // se ecita por ejemplo que se ejecute el setShow cuando el componente
+    return () => observer.disconnect()
   })
   
-  return <div id='LazyTrending'>
+  return <div ref={elementRef}>
     {show ? <TrendingSearches /> : null}
   </div>   
 }
