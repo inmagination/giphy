@@ -3,6 +3,7 @@
   display: flex;
   list-style: none;
   flex-flow: row wrap;
+  justify-content: center;
 }
 
 .trends li:after {
