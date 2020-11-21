@@ -1,37 +1,21 @@
-import React from 'react'
+import React, {Suspense} from 'react'
 import 'components/TrendingSearches/styles.css'
-
-import {useEffect, useState} from 'react';
-import { Link } from "wouter";
-
-import getTrendingGifs from 'services/getTrendingGifs'
+import Spinner from 'components/Spinner';
 import useNearScreen from 'hooks/useNearScreen'
 
-function TrendingSearches () {
-  const [trends, setTrends] = useState([])
-
-  useEffect(() => {     
-    getTrendingGifs().then(setTrends)
-  }, [])
-
-  return(
-    <React.Fragment>
-      <h4>Tendencias</h4>
-      <ul className='trends'>
-        {trends.map(trend => (           
-          <li key={trend}>
-            <Link to={`/search/${trend}`}>{trend}</Link>
-          </li>
-        ))}
-      </ul> 
-    </React.Fragment>
-  )
-}
+// cargar el componente y su js solo cuando lo necesitemos
+const TrendingSearches = React.lazy(
+  () => import('./TrendingSearches')
+)
 
 export default function LazyTrending () {    
-  const {isNearScreen, fromRef} = useNearScreen({distance: '200px'})   
+  const {isNearScreen, fromRef} = useNearScreen({
+    distance: '200px'
+  })   
   
   return <div ref={fromRef}>
-    {isNearScreen ? <TrendingSearches /> : null}
+    <Suspense fallback={<Spinner />}>
+      {isNearScreen ? <TrendingSearches /> : <Spinner />}
+    </Suspense>
   </div>   
 }

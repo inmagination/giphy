@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import { Link, useLocation } from "wouter";
 
 import ListOfGifs from 'components/ListOfGifs';
+import Spinner from 'components/Spinner';
 import LazyTrending from 'components/TrendingSearches';
+
 import {useGifs} from 'hooks/useGifs'
 
 const POPULAR_GIFS = ['husky', 'panda', 'tiger'];
@@ -42,7 +44,7 @@ export default function Home() {
 
       <h4>Última búsqueda</h4>
         {loading
-          ? <h4>Cargando....</h4>
+          ? <Spinner />
           : <ListOfGifs gifs={gifs} />
         } 
 
