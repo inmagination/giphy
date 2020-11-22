@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import ListOfGifs from 'components/ListOfGifs';
 import Spinner from 'components/Spinner'
-import {useGifs} from 'hooks/useGifs'
+import { useGifs } from 'hooks/useGifs'
+import useNearScreen from 'hooks/useNearScreen'
+import debounce from 'just-debounce-it'
 
 export default function SearchResults({ params }) { 
   const { keyword } = params  
   const { loading, gifs, setPage } = useGifs({ keyword }) // custom hook que devuelve loading y gifs
-    
-  const handleNextPage = () => setPage(prevPage => prevPage + 1)
+  const externalRef = useRef()
+  const { isNearScreen } = useNearScreen({ 
+    externalRef : loading ? null : externalRef,
+    once: false
+  }) 
+
+  const debounceHandleNextPage = useCallback(debounce(
+    () => setPage(prevPage => prevPage + 1), 1000
+  ), [])
+
+  useEffect(() => {
+    console.log(isNearScreen); 
+    if ( isNearScreen ) debounceHandleNextPage()
+  }, [debounceHandleNextPage, isNearScreen])
 
   return (
     <React.Fragment>
@@ -16,9 +30,9 @@ export default function SearchResults({ params }) {
         : <React.Fragment>
             <h3>Results for '{decodeURI(keyword)}'</h3>
             <ListOfGifs gifs={gifs} />
+            <div id='visor' ref={externalRef}></div>
           </React.Fragment>
       }
-      <button onClick={handleNextPage}>Get next page</button>
     </React.Fragment>     
   );
 }

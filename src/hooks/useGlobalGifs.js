@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import GifsContext from 'context/GifsContext'
 
 // custom hook para obtener los difs del contexto global

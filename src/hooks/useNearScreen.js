@@ -1,10 +1,11 @@
 import {useEffect, useState, useRef} from 'react';
 
-export default function useNearScreen({distance = '100px'} = {}) {  
+export default function useNearScreen({ distance = '100px', externalRef, once = true } = {}) {  
   const [isNearScreen, setShow] = useState(false)
   const fromRef = useRef() // referencia a un elemento del DOM sin selectores
   
   useEffect(() => {
+    const elementRef = externalRef ? externalRef.current : fromRef.current
     let observer = null     
 
     // callback que se ejecuta cuando el componente observado cambie
@@ -14,7 +15,9 @@ export default function useNearScreen({distance = '100px'} = {}) {
 
       if (el.isIntersecting) {
         setShow(true)
-        observer.disconnect() // deshabilitar el observer para que no siga saltando
+        once && observer.disconnect() // deshabilitar el observer para que no siga saltando
+      } else {
+        !once && setShow(false)
       }
     }
 
@@ -32,7 +35,7 @@ export default function useNearScreen({distance = '100px'} = {}) {
 
       // observar el elemento que deseamos vigilar
       // pasamos el elemento referenciado de userRef
-      observer.observe(fromRef.current)
+      if ( elementRef ) observer.observe(elementRef)
     })    
 
     // devolvemos la desconexion para que cuando el componente se deje de usar se limpie el evento
