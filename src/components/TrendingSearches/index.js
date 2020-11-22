@@ -1,5 +1,5 @@
 import React, {Suspense} from 'react'
-import 'components/TrendingSearches/styles.css'
+import 'components/TrendingSearches/styles.scss'
 import Spinner from 'components/Spinner';
 import useNearScreen from 'hooks/useNearScreen'
 

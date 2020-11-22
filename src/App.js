@@ -1,5 +1,5 @@
 // estilos 
-import 'App.css';
+import 'App.scss';
 
 // Páginas
 import Home from 'pages/Home'
