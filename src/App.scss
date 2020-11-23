@@ -13,13 +13,14 @@
   }
 }
 
+input {
+  padding: 10px;
+}
+
 button {
-  padding: 10px 20px;
-  font-size: 1.5rem;
+  padding: 10px;
   cursor: pointer;
   background-color: #0099ff;
-  border: 1px solid #eee;
-  border-radius: 5px;
 
   &:hover {
     opacity: 80%;

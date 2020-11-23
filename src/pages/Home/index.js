@@ -31,6 +31,7 @@ export default function Home() {
           value={keyword} 
           onChange={handleChange} 
           placeholder='Search a gif...'/>
+        <button>Buscar</button>
       </form>      
 
       <h4 className='App-title'>Los gifs más populares</h4> 
