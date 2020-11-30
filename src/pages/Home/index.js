@@ -1,38 +1,26 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link, useLocation } from "wouter";
 
 import ListOfGifs from 'components/ListOfGifs';
 import Spinner from 'components/Spinner';
 import LazyTrending from 'components/TrendingSearches';
+import SearchForm from 'components/SearchForm';
 
 import {useGifs} from 'hooks/useGifs'
 
 const POPULAR_GIFS = ['husky', 'panda', 'tiger'];
 
-export default function Home() { 
-  const [keyword, setKeyword] = useState('')
+export default function Home() {   
   const [path, setLocation] = useLocation()
   const { loading, gifs } = useGifs()
   
-  const handleSubmit = event => {
-    event.preventDefault();
+  const handleSubmit = ({keyword}) => {
     setLocation(`search/${keyword}`)
   }
 
-  const handleChange = event => {
-    setKeyword(event.target.value)
-  }
-
   return (
-    <React.Fragment>
-      <form onSubmit={handleSubmit}>
-        <input 
-          type='text' 
-          value={keyword} 
-          onChange={handleChange} 
-          placeholder='Search a gif...'/>
-        <button>Buscar</button>
-      </form>      
+    <React.Fragment>   
+      <SearchForm onSubmit={handleSubmit} />
 
       <h4 className='App-title'>Los gifs más populares</h4> 
       <ul>
