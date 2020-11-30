@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Link, useLocation } from "wouter";
 
 import ListOfGifs from 'components/ListOfGifs';
@@ -14,9 +14,10 @@ export default function Home() {
   const [path, setLocation] = useLocation()
   const { loading, gifs } = useGifs()
   
-  const handleSubmit = ({keyword}) => {
+  // evitamos que se cree el componente continuamente al cargar pagina (ver react dev tools)
+  const handleSubmit = useCallback(({keyword}) => {
     setLocation(`search/${keyword}`)
-  }
+  }, [setLocation])
 
   return (
     <React.Fragment>   

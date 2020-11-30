@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function SearchForm ({ onSubmit }) {
+function SearchForm ({ onSubmit }) {
   const [keyword, setKeyword] = useState('')
 
   const handleSubmit = event => {
@@ -10,7 +10,7 @@ export default function SearchForm ({ onSubmit }) {
 
   const handleChange = event => {
     setKeyword(event.target.value)
-  }
+  }  
 
   return(    
     <form onSubmit={handleSubmit}>
@@ -23,3 +23,6 @@ export default function SearchForm ({ onSubmit }) {
     </form>
   )
 }
+
+// memo > componente de orden superior que le pasas un componente y te devuelve otro
+export default React.memo(SearchForm)
