@@ -1,7 +1,8 @@
+import React from 'react';
 import { Link } from "wouter";
 import 'components/Gif/styles.scss'
 
-export default function Gif ({title, id, url}) {
+function Gif ({title, id, url}) {
   return(    
     <div className="Gif">
       <Link to={`/gif/${id}`}>
@@ -10,3 +11,11 @@ export default function Gif ({title, id, url}) {
     </div>
   )
 }
+
+// evitar que se rendericen los gifs que ya lo han hecho al hacer scroll
+// solo se renderizaran los que se vayan añadiendo por el scroll
+export default React.memo(Gif, (prevProps, nextProps) => {
+  // si se pasan props por objetos evitar que se rendericen todos los gifs
+  // react no compara cambios en objetos
+  return prevProps.id === nextProps.id
+})
