@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react'
 import { Link, useLocation } from "wouter";
+import { Helmet } from "react-helmet";
 
 import ListOfGifs from 'components/ListOfGifs';
 import Spinner from 'components/Spinner';
@@ -7,7 +8,6 @@ import LazyTrending from 'components/TrendingSearches';
 import SearchForm from 'components/SearchForm';
 
 import {useGifs} from 'hooks/useGifs'
-import useSeo from 'hooks/useSeo';
 
 const POPULAR_GIFS = ['husky', 'panda', 'tiger'];
 
@@ -20,10 +20,13 @@ export default function Home() {
     setLocation(`search/${keyword}`)
   }, [setLocation])
 
-  useSeo({description: `Home searcher gifs`, title: 'Home Search'})
-
   return (
     <React.Fragment>   
+      <Helmet>
+        <title>Giphy | Home Search</title> 
+        <meta name="description" content="Home search for Gifs application" />  
+      </Helmet>
+
       <SearchForm onSubmit={handleSubmit} />
 
       <h4 className='App-title'>Los gifs más populares</h4> 

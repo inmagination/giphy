@@ -1,10 +1,14 @@
 import React, { useCallback, useEffect, useRef } from 'react';
+
 import ListOfGifs from 'components/ListOfGifs';
 import Spinner from 'components/Spinner'
+
 import { useGifs } from 'hooks/useGifs'
 import useNearScreen from 'hooks/useNearScreen'
+
 import debounce from 'just-debounce-it'
-import useSeo from 'hooks/useSeo';
+import { Helmet } from "react-helmet";
+
 
 export default function SearchResults({ params }) { 
   const { keyword } = params  
@@ -15,9 +19,8 @@ export default function SearchResults({ params }) {
     once: false
   }) 
 
-  const title = gifs ? `${gifs.length} resultados de ${keyword}` : ''
-  useSeo({description: `${title}`, title})
-
+  const title = gifs ? `Giphy | ${gifs.length} resultados de ${keyword}` : 'Giphy | Search result'
+ 
   const debounceHandleNextPage = useCallback(debounce(
     () => setPage(prevPage => prevPage + 1), 1000
   ), [])
@@ -26,11 +29,15 @@ export default function SearchResults({ params }) {
     if ( isNearScreen ) debounceHandleNextPage()
   }, [debounceHandleNextPage, isNearScreen])
 
-  return (
-    <React.Fragment>
+  return (   
+    <React.Fragment>      
       {loading
         ? <Spinner />
         : <React.Fragment>
+            <Helmet>
+              <title>{title}</title>    
+              <meta name="description" content={title} />     
+            </Helmet>
             <h3>Results for '{decodeURI(keyword)}'</h3>
             <ListOfGifs gifs={gifs} />
             <div id='visor' ref={externalRef}></div>
