@@ -1,13 +1,13 @@
 import React from 'react'
-import useGlobalGifs from 'hooks/useGlobalGifs'
+import useSingleGif from 'hooks/useSingleGif';
 
 export default function Detail({params}) {  
-  const gifs = useGlobalGifs();
-  const detailGif = gifs.find(gif => gif.id === params.id )
+  const gif = useSingleGif({id: params.id})
+  if (!gif) return null
 
   return (
     <React.Fragment>
-      <img alt={detailGif.title} src={detailGif.url} />      
+      <img alt={gif.title} src={gif.url} />      
     </React.Fragment>
   )
 }
