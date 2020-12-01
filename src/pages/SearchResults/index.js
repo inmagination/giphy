@@ -4,6 +4,7 @@ import Spinner from 'components/Spinner'
 import { useGifs } from 'hooks/useGifs'
 import useNearScreen from 'hooks/useNearScreen'
 import debounce from 'just-debounce-it'
+import useSeo from 'hooks/useSeo';
 
 export default function SearchResults({ params }) { 
   const { keyword } = params  
@@ -13,6 +14,9 @@ export default function SearchResults({ params }) {
     externalRef : loading ? null : externalRef,
     once: false
   }) 
+
+  const title = gifs ? `${gifs.length} resultados de ${keyword}` : ''
+  useSeo({description: `${title}`, title})
 
   const debounceHandleNextPage = useCallback(debounce(
     () => setPage(prevPage => prevPage + 1), 1000

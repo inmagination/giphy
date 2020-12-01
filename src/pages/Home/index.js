@@ -7,6 +7,7 @@ import LazyTrending from 'components/TrendingSearches';
 import SearchForm from 'components/SearchForm';
 
 import {useGifs} from 'hooks/useGifs'
+import useSeo from 'hooks/useSeo';
 
 const POPULAR_GIFS = ['husky', 'panda', 'tiger'];
 
@@ -18,6 +19,8 @@ export default function Home() {
   const handleSubmit = useCallback(({keyword}) => {
     setLocation(`search/${keyword}`)
   }, [setLocation])
+
+  useSeo({description: `Home searcher gifs`, title: 'Home Search'})
 
   return (
     <React.Fragment>   
