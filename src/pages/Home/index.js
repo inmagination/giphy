@@ -29,7 +29,7 @@ export default function Home() {
 
       <SearchForm onSubmit={handleSubmit} />
 
-      <h4 className='App-title'>Los gifs más populares</h4> 
+      <h4 className='App-title'>Gifs más populares</h4> 
       <ul>
         {POPULAR_GIFS.map(popularGif => (           
           <li key={popularGif}>
