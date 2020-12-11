@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react'
-import { Link, useLocation } from "wouter";
+import React from 'react'
+import { Link } from "wouter";
 import { Helmet } from "react-helmet";
 
 import ListOfGifs from 'components/ListOfGifs';
@@ -11,14 +11,8 @@ import {useGifs} from 'hooks/useGifs'
 
 const POPULAR_GIFS = ['husky', 'panda', 'tiger'];
 
-export default function Home() {   
-  const [path, setLocation] = useLocation()
-  const { loading, gifs } = useGifs()
-  
-  // evitamos que se cree el componente continuamente al cargar pagina (ver react dev tools)
-  const handleSubmit = useCallback(({keyword}) => {
-    setLocation(`search/${keyword}`)
-  }, [setLocation])
+export default function Home() {    
+  const { loading, gifs } = useGifs() 
 
   return (
     <React.Fragment>   
@@ -27,7 +21,7 @@ export default function Home() {
         <meta name="description" content="Home search for Gifs application" />  
       </Helmet>
 
-      <SearchForm onSubmit={handleSubmit} />
+      <SearchForm />
 
       <h4 className='App-title'>Gifs más populares</h4> 
       <ul>
