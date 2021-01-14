@@ -1,25 +1,34 @@
-import React, { useReducer, useState } from 'react'
+import React, { useReducer } from 'react'
 import { useLocation } from "wouter";
 
 const RATINGS = ['g', 'pg', 'pg-13', 'r']
 
-const reducer = (state, param) => {
-  return {
-    ...state,
-    keyword: param,
-    times: state.times + 1
+const reducer = (state, action) => {
+  if ( action.type === 'update_keyword' ) {
+    return {
+      ...state,
+      keyword: action.payload,
+      times: state.times + 1
+    }
+  } else if ( action.type === 'update_rating' ) {
+    return {
+      ...state,
+      rating: action.payload
+    }
   }
+
+  return state
 }
 
 function SearchForm ( { initialKeyword = '', initialRating = 'g' } ) {
-  const [rating, setRating] = useState(initialRating)
 
   const [state, dispatch] = useReducer(reducer, {
     keyword: decodeURIComponent(initialKeyword),
+    rating: initialRating, 
     times: 0
   })
 
-  const { keyword, times } = state
+  const { keyword, rating, times } = state
 
   const [ _, setLocation] = useLocation()
 
@@ -29,16 +38,12 @@ function SearchForm ( { initialKeyword = '', initialRating = 'g' } ) {
   }
 
   const handleChangeRating = event => {
-    setRating(event.target.value)
+    dispatch({ type: 'update_rating', payload: event.target.value })
   }
 
   const handleChange = event => {
-    updateKeyword(event.target.value)
-  }   
-
-  const updateKeyword = (keyword) => {
-    dispatch(keyword)
-  }
+    dispatch({ type: 'update_keyword', payload: event.target.value })
+  }  
 
   return(    
     <form onSubmit={handleSubmit}>      
