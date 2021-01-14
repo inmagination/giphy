@@ -1,57 +1,12 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import { useLocation } from "wouter";
+import useForm from 'components/SearchForm/useForm'
 import 'components/SearchForm/styles.scss'
 
-
 const RATINGS = ['g', 'pg', 'pg-13', 'r']
-const ACTIONS = {
-  UPDATE_KEYWORD: 'update_keyword',
-  UPDATE_RATING: 'update_rating',
-  RESET: 'reset'
-}
-const INITIAL_STATE = {
-  keyword: '',
-  rating: 'g', 
-  times: 0
-}
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case ACTIONS.UPDATE_KEYWORD:
-      return {
-        ...state,
-        keyword: action.payload,
-        times: state.times + 1
-      }
-
-    case ACTIONS.UPDATE_RATING:
-      return {
-        ...state,
-        rating: action.payload
-      }
-
-    case ACTIONS.RESET:
-      return {
-        keyword: INITIAL_STATE.keyword,
-        rating: INITIAL_STATE.rating, 
-        times: INITIAL_STATE.times
-      }
-  
-    default:
-      return state
-  }
-}
-
-function SearchForm ( { initialKeyword = INITIAL_STATE.keyword, initialRating = INITIAL_STATE.rating } ) {
-
-  const [state, dispatch] = useReducer(reducer, {
-    keyword: decodeURIComponent(initialKeyword),
-    rating: initialRating, 
-    times: 0
-  })
-
-  const { keyword, rating, times } = state
-
+function SearchForm ( { initialKeyword = '', initialRating = 'g' } ) {
+  const { keyword, rating, times, updateKeyword, updateRating, reset } = useForm({ initialKeyword, initialRating })
   const [ _, setLocation] = useLocation()
 
   const handleSubmit = event => {
@@ -60,16 +15,16 @@ function SearchForm ( { initialKeyword = INITIAL_STATE.keyword, initialRating = 
   }
 
   const handleChangeRating = event => {
-    dispatch({ type: ACTIONS.UPDATE_RATING, payload: event.target.value })
+    updateRating(event.target.value)
   }
 
   const handleChange = event => {
-    dispatch({ type: ACTIONS.UPDATE_KEYWORD, payload: event.target.value })
+    updateKeyword(event.target.value)
   }  
 
   const handleReset = event => {
     event.preventDefault()
-    dispatch({ type: ACTIONS.RESET })
+    reset()
   }
 
   return(     
