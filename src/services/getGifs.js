@@ -1,6 +1,6 @@
 import { API_KEY, API_URL } from 'services/settings'
 
-export default function getGifs({limit = 5, keyword = 'cat', page = 0, rating  } = {}) {
+export default function getGifs({limit = 5, keyword = 'cat', page = 0, rating = 'g' } = {}) {
   // offset > cuantos resultados me tengo que saltar en cada pagina
   const apiUrl = `${API_URL}/gifs/search?api_key=${API_KEY}&q=${keyword}&limit=${limit}&offset=${page * limit}&rating=${rating}&lang=en`;
 

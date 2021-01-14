@@ -3,9 +3,9 @@ import { useLocation } from "wouter";
 
 const RATINGS = ['g', 'pg', 'pg-13', 'r']
 
-function SearchForm () {
-  const [keyword, setKeyword] = useState('')
-  const [rating, setRating] = useState(RATINGS[0])
+function SearchForm ( { initialKeyword = '', initialRating = 'g' } ) {
+  const [keyword, setKeyword] = useState(decodeURIComponent(initialKeyword))
+  const [rating, setRating] = useState(initialRating)
   const [, setLocation] = useLocation()
 
   const handleSubmit = event => {

@@ -40,7 +40,7 @@ export default function SearchResults({ params }) {
               <meta name="description" content={title} />     
             </Helmet>
 
-            <SearchForm />
+            <SearchForm initialKeyword={keyword} initialRating={rating} />
 
             <h3>Results for '{decodeURI(keyword)}'</h3>
             <ListOfGifs gifs={gifs} />
