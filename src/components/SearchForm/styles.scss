@@ -1,0 +1,28 @@
+.SearchForm {
+
+  &__data {
+    margin-bottom: 10px;
+
+    input, select {
+      padding: 10px;
+      margin-right: 10px;
+    }
+  }
+
+  &__buttons {
+    width: 100%;
+
+    button {
+      width: calc(50% - 5px);
+
+      &:first-child{
+        margin-right: 10px;
+      }
+    }
+  }
+
+  &__reset {
+    background-color: grey;
+    color: white;
+  }
+}
