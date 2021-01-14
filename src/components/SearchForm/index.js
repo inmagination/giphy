@@ -1,13 +1,20 @@
 import React, { useState } from 'react'
 import { useLocation } from "wouter";
 
+const RATINGS = ['g', 'pg', 'pg-13', 'r']
+
 function SearchForm () {
   const [keyword, setKeyword] = useState('')
+  const [rating, setRating] = useState(RATINGS[0])
   const [, setLocation] = useLocation()
 
   const handleSubmit = event => {
     event.preventDefault();
-    setLocation(keyword)
+    setLocation(`/search/${keyword}/${rating}`)
+  }
+
+  const handleChangeRating = event => {
+    setRating(event.target.value)
   }
 
   const handleChange = event => {
@@ -15,12 +22,17 @@ function SearchForm () {
   }   
 
   return(    
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>      
       <input 
         type='text' 
         value={keyword} 
         onChange={handleChange} 
         placeholder='Search a gif...'/>
+
+      <select value={rating} onChange={handleChangeRating}>
+        {RATINGS.map(rating => <option key={rating}>{rating}</option>)}
+      </select>
+
       <button>Buscar</button>
     </form>
   )

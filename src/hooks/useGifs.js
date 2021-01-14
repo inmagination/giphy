@@ -4,7 +4,7 @@ import GifsContext from 'context/GifsContext'
 
 const INITAL_PAGE = 0
 
-export function useGifs ({ keyword } = { keyword: null } ) {
+export function useGifs ({ keyword, rating } = { keyword: null } ) {
   const [loading, setLoading] = useState(false); 
   const [loadingNextPage, setLoadingNextPage] = useState(false);
 
@@ -20,13 +20,13 @@ export function useGifs ({ keyword } = { keyword: null } ) {
   useEffect(() => {    
     setLoading(true)     
 
-    getGifs({ keyword: keywordToUse })
+    getGifs({ keyword: keywordToUse, rating })
       .then(gifs => {
         setGifs(gifs)
         setLoading(false)
         localStorage.setItem('lastKeword', keyword)
       })
-  }, [keyword, keywordToUse, setGifs]) // pasamos dependencia para que cada vez que cambie se renderice la lista
+  }, [keyword, keywordToUse, setGifs, rating]) // pasamos dependencia para que cada vez que cambie se renderice la lista
 
 
   // paginación en los gifs de resultados
@@ -34,13 +34,13 @@ export function useGifs ({ keyword } = { keyword: null } ) {
     if ( page === INITAL_PAGE ) return
     setLoadingNextPage(true)    
 
-    getGifs({ keyword: keywordToUse, page})
+    getGifs({ keyword: keywordToUse, rating, page})
       .then(nextGifs => {
         setGifs(prevGifs => prevGifs.concat(nextGifs))
         setLoadingNextPage(false)
       })
 
-  }, [keywordToUse, setGifs, page])
+  }, [keywordToUse, setGifs, page, rating])
 
   return {loading, loadingNextPage, gifs, setPage}
 }

@@ -12,8 +12,8 @@ import { Helmet } from "react-helmet";
 
 
 export default function SearchResults({ params }) { 
-  const { keyword } = params  
-  const { loading, gifs, setPage } = useGifs({ keyword }) // custom hook que devuelve loading y gifs
+  const { keyword, rating = 'g' } = params  
+  const { loading, gifs, setPage } = useGifs({ keyword, rating }) // custom hook que devuelve loading y gifs
   const externalRef = useRef()
   const { isNearScreen } = useNearScreen({ 
     externalRef : loading ? null : externalRef,
@@ -39,9 +39,12 @@ export default function SearchResults({ params }) {
               <title>{title}</title>    
               <meta name="description" content={title} />     
             </Helmet>
+
             <SearchForm />
+
             <h3>Results for '{decodeURI(keyword)}'</h3>
             <ListOfGifs gifs={gifs} />
+
             <div id='visor' ref={externalRef}></div>
           </React.Fragment>
       }
