@@ -2,22 +2,29 @@ import React, { useReducer } from 'react'
 import { useLocation } from "wouter";
 
 const RATINGS = ['g', 'pg', 'pg-13', 'r']
+const ACTIONS = {
+  UPDATE_KEYWORD: 'update_keyword',
+  UPDATE_RATING: 'update_rating'
+}
 
 const reducer = (state, action) => {
-  if ( action.type === 'update_keyword' ) {
-    return {
-      ...state,
-      keyword: action.payload,
-      times: state.times + 1
-    }
-  } else if ( action.type === 'update_rating' ) {
-    return {
-      ...state,
-      rating: action.payload
-    }
-  }
+  switch (action.type) {
+    case ACTIONS.UPDATE_KEYWORD:
+      return {
+        ...state,
+        keyword: action.payload,
+        times: state.times + 1
+      }
 
-  return state
+    case ACTIONS.UPDATE_RATING:
+      return {
+        ...state,
+        rating: action.payload
+      }
+  
+    default:
+      return state
+  }
 }
 
 function SearchForm ( { initialKeyword = '', initialRating = 'g' } ) {
@@ -38,11 +45,11 @@ function SearchForm ( { initialKeyword = '', initialRating = 'g' } ) {
   }
 
   const handleChangeRating = event => {
-    dispatch({ type: 'update_rating', payload: event.target.value })
+    dispatch({ type: ACTIONS.UPDATE_KEYWORD, payload: event.target.value })
   }
 
   const handleChange = event => {
-    dispatch({ type: 'update_keyword', payload: event.target.value })
+    dispatch({ type: ACTIONS.UPDATE_RATING, payload: event.target.value })
   }  
 
   return(    
